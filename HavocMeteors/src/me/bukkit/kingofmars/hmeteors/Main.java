@@ -32,9 +32,6 @@ public class Main extends JavaPlugin{
 		
 	}
 	
-	public void ligarListeners() {
-		
-	}
 	
 	public static void registerEvents(org.bukkit.plugin.Plugin plugin, Listener... listeners) {
 		for (Listener listener : listeners) {
