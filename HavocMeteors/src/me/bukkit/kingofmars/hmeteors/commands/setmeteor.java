@@ -31,8 +31,7 @@ public class setmeteor implements CommandExecutor{
 			if (args.length == 0) {
 				p.sendMessage(ChatColor.DARK_AQUA + "Please specify a number for the meteor point !");
 				return true;
-			}
-			
+			}	
 			
 			fileMeteor.get().set("Meteors ." + args[0] + ".world",world);
 			fileMeteor.get().set("Meteors ." + args[0] + ".x",x);

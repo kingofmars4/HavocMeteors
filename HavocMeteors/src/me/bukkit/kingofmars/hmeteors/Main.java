@@ -32,7 +32,6 @@ public class Main extends JavaPlugin{
 		
 	}
 	
-	
 	public static void registerEvents(org.bukkit.plugin.Plugin plugin, Listener... listeners) {
 		for (Listener listener : listeners) {
 		Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
