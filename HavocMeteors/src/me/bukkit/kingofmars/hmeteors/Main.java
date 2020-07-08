@@ -31,25 +31,10 @@ import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.EntityFireball;
 
 public class Main extends JavaPlugin{
-	public static ArrayList<String> fragmentLore =new ArrayList<String>();
 	
 	private static Plugin plugin;
 	
 	public int atoa;
-	
-	ItemStack sFragment = new ItemStack(Material.NETHER_STAR);
-	ItemMeta fragment = sFragment.getItemMeta();
-	
-	public class Move implements Listener{
-		@EventHandler
-		   public void ligarPlugin (PluginEnableEvent event) {
-		        
-		     fragmentLore.add(ChatColor.DARK_AQUA + "This is a very rare meteor shard!");
-		     fragment.setDisplayName(ChatColor.BOLD + "$3Meteor Shard");
-		     fragment.addEnchant(Enchantment.DURABILITY, 1, true);
-		     sFragment.addEnchantment(Enchantment.DURABILITY, 1);
-		   }
-	}
 	
 	public void onEnable() {
 		plugin = this;
@@ -63,7 +48,6 @@ public class Main extends JavaPlugin{
 		timerUltimo();
 		acabouQueda();
 		
-		Bukkit.getServer().getPluginManager().registerEvents(new Move(), this);
 	}
 	
 	public void onDisable() {
@@ -171,7 +155,7 @@ public class Main extends JavaPlugin{
             	Bukkit.broadcastMessage(ChatColor.RED + "An meteor is falling on the coordinates: " + ChatColor.WHITE + "X:" + fileMeteor.get().getInt("Meteors ." + atoa + ".x") + " Z:" + fileMeteor.get().getInt("Meteors ." + atoa + ".z"));
             }
         }
-        , 12020, 12400); 
+        , 60, 12400); 
     }
 	
 	public void outroRunnable() {		
@@ -188,18 +172,26 @@ public class Main extends JavaPlugin{
 			public void run() {
 				
 				
-				y = y - 5;
+				y = y - 2;
 				Location l = new Location (w, x, y, z);
 				w.playEffect(l, Effect.EXPLOSION_HUGE, 300);
 				System.out.println("explodiuuu em " + x + " " + y + " " + z);
 				
 				if (y <= i.getDouble("Meteors ." + atoa + ".y")) {
 					cancel();
+					
+					ItemStack sFragment = new ItemStack(Material.NETHER_STAR);
+					
+					/*ItemMeta fragment = sFragment.getItemMeta();
+				    fragment.setDisplayName(ChatColor.BOLD + "Meteor Shard");*/
+					
+					y = i.getDouble("Meteors ." + atoa + ".y") + 5;
+					
 					System.out.println("dropou em " + l);
-					w.dropItemNaturally(l, (ItemStack) fragment);
+					w.dropItem(l, sFragment);
 				};
 			}
-		}.runTaskTimerAsynchronously(this, 10, 7);
+		}.runTaskTimerAsynchronously(this, 5, 5);
 		
 	}
 	
