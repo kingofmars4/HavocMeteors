@@ -35,11 +35,11 @@ public class setmeteor implements CommandExecutor{
 				p.sendMessage(ChatColor.DARK_AQUA + "Please specify a number for the meteor point !");
 				return true;
 			}	
-
-			ItemStack sFragment = new ItemStack(Material.NETHER_STAR);
-			ItemMeta fragment = sFragment.getItemMeta();
-			fragment.setDisplayName(ChatColor.BOLD + "$3Meteor Shard");
-			w.dropItemNaturally(l, sFragment);
+			
+			if (!sender.hasPermission("meteors.set")) {
+				p.sendMessage(ChatColor.DARK_AQUA + "You dont have permissions to execute this command !");
+				return true;
+			}
 			
 			fileMeteor.get().set("Meteors ." + args[0] + ".world",world);
 			fileMeteor.get().set("Meteors ." + args[0] + ".x",x);

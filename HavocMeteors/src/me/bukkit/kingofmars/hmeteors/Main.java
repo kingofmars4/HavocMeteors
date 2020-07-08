@@ -88,13 +88,12 @@ public class Main extends JavaPlugin{
             public void run()
             {
 				atoa = mu_rand(1, 10);
-				
-			
             }
         }
-        , 0, 12100); // manda logo no inicio / espera 10 min e 10 sec
+        , 0, 12450); // manda logo no inicio / espera 10 min e 10 sec
     }
     
+	
 	public void timer()
     {
         this.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
@@ -102,7 +101,6 @@ public class Main extends JavaPlugin{
         	
             public void run()
             {
-            	System.out.println("Atoa igual a "+ atoa);
 				Bukkit.broadcastMessage(ChatColor.RED + "An meteor will fall in under 10 minutes at " + ChatColor.WHITE + "X:" + fileMeteor.get().getInt("Meteors ." + atoa + ".x") + " Z:" + fileMeteor.get().getInt("Meteors ." + atoa + ".z"));
             }
         }
@@ -116,7 +114,6 @@ public class Main extends JavaPlugin{
         	
             public void run()
             {
-            	System.out.println("Atoa igual a "+ atoa);
             	Bukkit.broadcastMessage(ChatColor.RED + "An meteor will fall in under 5 minutes at " + ChatColor.WHITE + "X:" + fileMeteor.get().getInt("Meteors ." + atoa + ".x") + " Z:" + fileMeteor.get().getInt("Meteors ." + atoa + ".z"));
             	}
             }
@@ -130,7 +127,6 @@ public class Main extends JavaPlugin{
         {
             public void run()
             {
-            	System.out.println("Atoa igual a "+ atoa);
             	Bukkit.broadcastMessage(ChatColor.RED + "An meteor will fall in under 1 minute at " + ChatColor.WHITE + "X:" + fileMeteor.get().getInt("Meteors ." + atoa + ".x") + " Z:" + fileMeteor.get().getInt("Meteors ." + atoa + ".z"));
             }
         }
@@ -155,45 +151,40 @@ public class Main extends JavaPlugin{
             	Bukkit.broadcastMessage(ChatColor.RED + "An meteor is falling on the coordinates: " + ChatColor.WHITE + "X:" + fileMeteor.get().getInt("Meteors ." + atoa + ".x") + " Z:" + fileMeteor.get().getInt("Meteors ." + atoa + ".z"));
             }
         }
-        , 60, 12400); 
+        , 12020, 12400); 
     }
 	
-	public void outroRunnable() {		
-		final BukkitTask loop = new BukkitRunnable() {
+		public void outroRunnable() {		
+			final BukkitTask loop = new BukkitRunnable() {
+				
+				
+			    World w = Bukkit.getWorld("world");
+			    FileConfiguration i = fileMeteor.get();
+			    double x = i.getDouble("Meteors ." + atoa + ".x");
+				double y = i.getDouble("Meteors ." + atoa + ".y") + 120;
+				double z = i.getDouble("Meteors ." + atoa + ".z");
+			    
+				@Override
+				public void run() {
+					
+					y = y - 4;
+					Location l = new Location (w, x, y, z);
+					w.playEffect(l, Effect.EXPLOSION_HUGE, 300);
+					
+					if (y <= i.getDouble("Meteors ." + atoa + ".y")) {
+						
+						cancel();
+						ItemStack sFragment = new ItemStack(Material.NETHER_STAR);
+						ItemMeta fragment = sFragment.getItemMeta();
+
+						w.dropItem(l, sFragment);
+					}
+				}
+				
+			}.runTaskTimer(this, 5, 5);
 			
-			
-		    World w = Bukkit.getWorld("world");
-		    FileConfiguration i = fileMeteor.get();
-		    double x = i.getDouble("Meteors ." + atoa + ".x");
-			double y = i.getDouble("Meteors ." + atoa + ".y") + 120;
-			double z = i.getDouble("Meteors ." + atoa + ".z");
-		    
-			@Override
-			public void run() {
-				
-				
-				y = y - 2;
-				Location l = new Location (w, x, y, z);
-				w.playEffect(l, Effect.EXPLOSION_HUGE, 300);
-				System.out.println("explodiuuu em " + x + " " + y + " " + z);
-				
-				if (y <= i.getDouble("Meteors ." + atoa + ".y")) {
-					cancel();
-					
-					ItemStack sFragment = new ItemStack(Material.NETHER_STAR);
-					
-					/*ItemMeta fragment = sFragment.getItemMeta();
-				    fragment.setDisplayName(ChatColor.BOLD + "Meteor Shard");*/
-					
-					y = i.getDouble("Meteors ." + atoa + ".y") + 5;
-					
-					System.out.println("dropou em " + l);
-					w.dropItem(l, sFragment);
-				};
-			}
-		}.runTaskTimerAsynchronously(this, 5, 5);
-		
-	}
+		}
+
 	
 	
 	
