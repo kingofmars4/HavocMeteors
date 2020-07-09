@@ -1,6 +1,8 @@
 name: HavocMeteors
 main: me.bukkit.kingofmars.hmeteors.Main
 version: 1.0
+depend: [Vault]
+
 commands:
       setmeteor:
            description: Set a location of meteor

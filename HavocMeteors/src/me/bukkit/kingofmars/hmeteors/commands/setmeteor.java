@@ -1,5 +1,7 @@
 package me.bukkit.kingofmars.hmeteors.commands;
 
+import java.util.ArrayList;
+
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -7,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,6 +22,17 @@ public class setmeteor implements CommandExecutor{
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		
+		// TEST KNOCKBACK
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.GREEN + "Use this stick to test other players knockback!");
+		ItemStack knockback = new ItemStack(Material.STICK);
+		ItemMeta kbm = knockback.getItemMeta();
+		kbm.setDisplayName(ChatColor.DARK_AQUA.BOLD + "Meteor Shard");
+		kbm.addEnchant(Enchantment.KNOCKBACK, 2, true);
+		kbm.addItemFlags();
+		kbm.setLore(lore);
+		knockback.setItemMeta(kbm);
 		
 		if (cmd.getName().equalsIgnoreCase("setmeteor") && sender instanceof Player) {
 			
